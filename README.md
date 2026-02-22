@@ -1,6 +1,6 @@
 # Veda USDe Vault
 
-## Quest Prompt
+## Quest
 
 Use a Veda vault to:
 - Deposit USDe and get your share of the vault's USDe in return
@@ -18,10 +18,10 @@ This repo delivers an end-to-end Veda-style USDe vault implementation with:
 
 ## Demo Videos
 
-- Web interactive demo: `https://youtu.be/gG992x0GUjo`
-- Terminal full run demo: `https://youtu.be/_gmdjF8OuJ8`
+- **Web Interactive Demo**: https://youtu.be/gG992x0GUjo  
+- **Terminal Full Run Demo**: https://youtu.be/_gmdjF8OuJ8
 
-## Submission (Copy/Paste Ready)
+## Submission 
 
 GitHub: `https://github.com/naitikrahane/VedaUsdvault`
 
