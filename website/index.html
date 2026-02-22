@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Veda USDe Vault Installer Guide</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape shape-a"></div>
+    <div class="bg-shape shape-b"></div>
+
+    <header class="hero section reveal">
+      <p class="eyebrow">Clone -> Build -> Test -> Demo</p>
+      <h1>Veda USDe Vault Full Process Kit</h1>
+      <p class="lead">
+        This site is bundled with the repo and explains the exact quest-required
+        vault behavior in English, plus the full setup and test process.
+      </p>
+      <div class="hero-actions">
+        <button class="btn primary copy-btn" data-copy="npm run full:all">Copy full run command</button>
+        <button class="btn ghost copy-btn" data-copy="npm run demo">Copy quest demo command</button>
+        <button class="btn ghost copy-btn" data-copy="npm run site">Copy docs server command</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="section reveal">
+        <h2>Quest Requirement Match (English)</h2>
+        <p class="subtle">Each requirement from the quest mapped to contracts/functions in this repo.</p>
+        <div class="quest-grid">
+          <article class="quest-item">
+            <h3>Deposit USDe and get shares</h3>
+            <p>
+              <code>TellerWith3DayQueue.deposit(assets, receiver)</code> transfers USDe into
+              the vault and mints shares via <code>USDeBoringVault.mintShares</code>.
+            </p>
+          </article>
+          <article class="quest-item">
+            <h3>Manager can do unrestricted actions</h3>
+            <p>
+              <code>USDeBoringVault.managerCall(target, value, data)</code> allows authorized
+              managers to execute arbitrary external calls.
+            </p>
+          </article>
+          <article class="quest-item">
+            <h3>Manager list from external authority</h3>
+            <p>
+              <code>ManagerRegistry.isAuthorizedManager</code> reads
+              <code>SimpleManagerAuthority.isAuthorizedManager</code> as source of truth.
+            </p>
+          </article>
+          <article class="quest-item">
+            <h3>3-day withdraw queue</h3>
+            <p>
+              <code>TellerWith3DayQueue.WITHDRAW_DELAY = 3 days</code>.
+              Early claim reverts, mature claim burns shares and returns assets.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Quest Demo Flow Output</h2>
+        <p class="subtle">Run <code>npm run demo</code>. Expected checkpoints:</p>
+        <div class="checklist">
+          <label><input type="checkbox" /> unauthorized manager call fails</label>
+          <label><input type="checkbox" /> authority enables manager</label>
+          <label><input type="checkbox" /> manager executes unrestricted call</label>
+          <label><input type="checkbox" /> early withdrawal claim fails before 3 days</label>
+          <label><input type="checkbox" /> matured claim succeeds after 3 days</label>
+          <label><input type="checkbox" /> revoked manager loses access</label>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Interactive Vault Demo (Do It Here)</h2>
+        <p class="subtle">
+          Run <code>npm run web:demo</code> and open this page.
+          Then click buttons to perform actual vault actions from the website.
+        </p>
+        <div class="actions-grid">
+          <button class="btn primary action-btn" data-action="init">1) Init / Create Vault</button>
+          <button class="btn ghost action-btn" data-action="deposit">2) Deposit 100 USDe</button>
+          <button class="btn ghost action-btn" data-action="enable-manager">3) Enable Manager</button>
+          <button class="btn ghost action-btn" data-action="manager-transfer">4) Manager Transfer 10 USDe</button>
+          <button class="btn ghost action-btn" data-action="request-withdraw">5) Request Withdraw 40 Shares</button>
+          <button class="btn ghost action-btn" data-action="claim-early">6) Try Early Claim</button>
+          <button class="btn ghost action-btn" data-action="advance-3days">7) Advance 3 Days</button>
+          <button class="btn ghost action-btn" data-action="claim-withdraw">8) Claim Withdraw</button>
+          <button class="btn ghost action-btn" data-action="revoke-manager">9) Revoke Manager</button>
+          <button class="btn ghost action-btn" data-action="manager-after-revoke">10) Manager Try After Revoke</button>
+          <button class="btn primary action-btn" data-action="run-full">Run Full Flow Automatically</button>
+          <button class="btn ghost action-btn" data-action="state">Refresh State</button>
+        </div>
+
+        <div class="state-grid">
+          <article class="state-item"><span>Initialized</span><strong id="st-initialized">-</strong></article>
+          <article class="state-item"><span>Manager Authorized</span><strong id="st-manager-auth">-</strong></article>
+          <article class="state-item"><span>Next Request ID</span><strong id="st-next-request">-</strong></article>
+          <article class="state-item"><span>Alice USDe</span><strong id="st-alice-usde">-</strong></article>
+          <article class="state-item"><span>Alice Shares</span><strong id="st-alice-shares">-</strong></article>
+          <article class="state-item"><span>Vault USDe</span><strong id="st-vault-usde">-</strong></article>
+          <article class="state-item"><span>Teller Shares</span><strong id="st-teller-shares">-</strong></article>
+          <article class="state-item"><span>Receiver USDe</span><strong id="st-receiver-usde">-</strong></article>
+        </div>
+
+        <pre id="live-log" class="live-log"><code>Waiting for actions...</code></pre>
+      </section>
+
+      <section class="section reveal">
+        <h2>Process Overview</h2>
+        <div class="timeline">
+          <article class="node">
+            <span class="step">01</span>
+            <h3>Install prerequisites</h3>
+            <p>Node 20+, npm, git.</p>
+          </article>
+          <article class="node">
+            <span class="step">02</span>
+            <h3>Run installer kit</h3>
+            <p>Use Windows PowerShell or bash script from <code>installer-kit/</code>.</p>
+          </article>
+          <article class="node">
+            <span class="step">03</span>
+            <h3>Compile and test</h3>
+            <p>Unit plus integration tests validate queue and manager authority behavior.</p>
+          </article>
+          <article class="node">
+            <span class="step">04</span>
+            <h3>Run full demo</h3>
+            <p>Script runs deposit, manager actions, 3-day queue, and manager revoke.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Installer Commands</h2>
+        <p class="subtle">Use one of these after cloning the repo.</p>
+        <div class="tabs">
+          <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="windows">Windows</button>
+            <button class="tab-btn" data-tab="unix">macOS / Linux</button>
+            <button class="tab-btn" data-tab="npm">NPM only</button>
+          </div>
+          <div class="tab-panel active" id="windows">
+            <pre><code>powershell -ExecutionPolicy Bypass -File .\installer-kit\install.ps1</code></pre>
+            <button class="btn tiny copy-btn" data-copy="powershell -ExecutionPolicy Bypass -File .\installer-kit\install.ps1">Copy</button>
+          </div>
+          <div class="tab-panel" id="unix">
+            <pre><code>bash ./installer-kit/install.sh</code></pre>
+            <button class="btn tiny copy-btn" data-copy="bash ./installer-kit/install.sh">Copy</button>
+          </div>
+          <div class="tab-panel" id="npm">
+            <pre><code>npm install
+npm run full:all</code></pre>
+            <button class="btn tiny copy-btn" data-copy="npm install && npm run full:all">Copy</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Core Components</h2>
+        <div class="grid cards">
+          <article class="card">
+            <h3>BoringVault</h3>
+            <p><code>USDeBoringVault</code> custodies assets, mints and burns shares, and executes manager calls.</p>
+          </article>
+          <article class="card">
+            <h3>Teller + Queue</h3>
+            <p><code>TellerWith3DayQueue</code> handles deposits and withdrawal requests with fixed 3-day maturity.</p>
+          </article>
+          <article class="card">
+            <h3>Manager Authority</h3>
+            <p>Manager access is controlled by external authority through <code>ManagerRegistry</code>.</p>
+          </article>
+          <article class="card">
+            <h3>Demo Harness</h3>
+            <p>Tests and scripts validate unrestricted manager calls and queue lifecycle behavior.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Repository Map</h2>
+        <pre class="tree"><code>contracts/         Solidity contracts
+test/              Hardhat tests (unit + full flow)
+scripts/           demo, doctor, docs web server
+installer-kit/     clone-and-run install scripts
+website/           this guide website
+README.md          full written documentation</code></pre>
+      </section>
+
+      <section class="section reveal">
+        <h2>Verification Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" /> <code>npm run doctor</code> passes</label>
+          <label><input type="checkbox" /> <code>npm run compile</code> passes</label>
+          <label><input type="checkbox" /> <code>npm run test:all</code> passes</label>
+          <label><input type="checkbox" /> <code>npm run demo</code> completes</label>
+          <label><input type="checkbox" /> website opens at <code>http://localhost:4173</code></label>
+        </div>
+      </section>
+    </main>
+
+    <footer class="section foot reveal">
+      <p>Built for quick onboarding and reproducible local verification.</p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

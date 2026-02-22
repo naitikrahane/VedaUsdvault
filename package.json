@@ -1,0 +1,23 @@
+{
+  "name": "veda-usde-vault",
+  "version": "1.0.0",
+  "description": "Veda-style USDe vault with manager authority sync and 3-day withdraw queue",
+  "license": "MIT",
+  "scripts": {
+    "doctor": "node scripts/doctor.js",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:full": "hardhat test test/VedaUSDeVault.full.test.js",
+    "test:all": "npm run test && npm run test:full",
+    "demo": "hardhat run scripts/fullDemo.js",
+    "site": "node scripts/serve-site.js",
+    "web:demo": "node scripts/web-demo-server.js",
+    "full": "npm run compile && npm run test:full && npm run demo",
+    "full:all": "npm run doctor && npm run compile && npm run test:all && npm run demo"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.15",
+    "solc": "0.8.26"
+  }
+}
