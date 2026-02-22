@@ -76,14 +76,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    S[User has shares] --> Q[requestWithdraw(shares)]
-    Q --> L[Request stored with unlockTimestamp = now + 3 days]
-    L --> E{claim before unlock?}
-    E -->|Yes| R1[Revert: RequestNotMatured]
-    E -->|No| C[claimWithdraw]
-    C --> B[Burn queued shares]
-    B --> P[Transfer USDe assets to receiver]
-    P --> D[Done]
+    S["User has shares"] --> Q["requestWithdraw(shares)"]
+    Q --> L["Request stored\nunlockTimestamp = now + 3 days"]
+    L --> E{"Claim before unlock"}
+    E -->|Yes| R1["Revert: RequestNotMatured"]
+    E -->|No| C["claimWithdraw"]
+    C --> B["Burn queued shares"]
+    B --> P["Transfer USDe assets to receiver"]
+    P --> D["Done"]
 ```
 
 ## Contracts and Roles
