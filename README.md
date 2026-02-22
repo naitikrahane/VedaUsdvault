@@ -19,6 +19,21 @@ The repository includes:
 - Interactive website where the same quest flow is executed via buttons.
 - Installer scripts for Windows and Linux/macOS that install dependencies and run the full pipeline.
 
+## 2.5. Demo Video
+
+Watch the complete interactive demonstration video showing:
+- Live execution of the vault flow through the interactive website demo
+- Terminal PowerShell command execution with detailed output
+- Full quest requirement verification in action
+
+<!-- DEMO VIDEO PLACEHOLDER - INSERT YOUR VIDEO HERE -->
+[📹 Click here to view the complete demo video](#) 
+
+**Video includes:**
+- Interactive website demo with button-based vault operations
+- Terminal walkthrough showing PowerShell commands and results
+- Real-time verification of deposit, withdrawal, and manager authorization flows
+
 ## 3. High-Level Architecture Diagram
 
 ```text
